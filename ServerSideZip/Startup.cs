@@ -46,7 +46,7 @@ namespace ServerSideZip
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                // endpoints.MapFallbackToController(nameof(Controllers.HomeController.Index), "Home");
+                endpoints.MapFallbackToController(nameof(Controllers.HomeController.Index), "Home");
             });
         }
     }
