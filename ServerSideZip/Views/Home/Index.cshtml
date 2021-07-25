@@ -16,22 +16,22 @@
     <button type="button" id="testButton" onclick="getArchiveAjax()">Get Archives</button>
 </div>
 <script>
-
-function getArchiveAjax(){ 
-        axios.get("/ServerSideZip/getArchive",{
-            responseType: "blob"
-        }).then(x=> {
-            const filenameHeader = x.headers["content-disposition"].split(';')[1];
-            const filename = filenameHeader.substring(filenameHeader.indexOf("=")+1);
-            const url = URL.createObjectURL(new Blob([x.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', filename);
-            document.body.append(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-    }
+function getArchiveAjax(){
+    axios.get("/ServerSideZip/getArchive",{
+        responseType: "blob"
+    }).then(x=> {
+        const filenameHeader = x.headers["content-disposition"].split(';')[1];
+        const filename = filenameHeader.substring(filenameHeader.indexOf("=")+1);
+        const url = URL.createObjectURL(x.data); 
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.append(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    });
+}
 </script>
 </body>
 </html>
